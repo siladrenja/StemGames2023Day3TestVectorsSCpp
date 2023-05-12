@@ -1,0 +1,17 @@
+﻿<Window x:Class="TestVectors.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestVectors"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Viewbox x:Name="view" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top">
+        <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Visible">
+            <Border x:Name="gridBorder" BorderBrush="Black" BorderThickness="1" CornerRadius ="0" MinWidth="500" MinHeight="500">
+                <Grid x:Name="grdChampions" ShowGridLines="True">
+                </Grid>
+            </Border>
+        </ScrollViewer>
+    </Viewbox>
+</Window>
