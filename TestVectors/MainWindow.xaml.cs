@@ -46,10 +46,55 @@ namespace TestVectors
 
     public class GridFunctions
     {
-        public static void ResizeGridAccordingly(Grid toResize)
+        /*
+            Pozovi na kraju, kad ubaciš sve redove, ovo će prilagoditi Grid broju redova
+         */
+        public static void ResizeGrid(Grid toResize)
         {
 
         }
+
+        //očisti grid da nema redova ni stupaca
+        public static void ClearGrid(Grid toClear)
+        {
+
+        }
+
+        public static DataGridTextColumn InsertColumn(Grid toInsert)
+        {
+
+            return null;
+        }
+
+        public static void WriteToRow(Array row)
+        {
+
+        }
+
+        public static RowDefinition InsertRow(Grid toInsert)
+        {
+            RowDefinition row = new RowDefinition();
+            toInsert.RowDefinitions.Add(row);
+            return row;
+        }
+
+        public static void Remove(Grid toRemove, ColumnDefinition column)
+        {
+            toRemove.ColumnDefinitions.Remove(column);
+        }
+
+        public static void Remove(Grid toRemove, RowDefinition row)
+        {
+            toRemove.RowDefinitions.Remove(row);
+            
+        }
+
+        public static void Clear(Grid toClear)
+        {
+            toClear.ColumnDefinitions.Clear();
+            toClear.RowDefinitions.Clear();
+        }
+        
 
 
     }
@@ -69,6 +114,7 @@ namespace TestVectors
             {
                 grdChampions.ColumnDefinitions.Add(new ColumnDefinition());
             }
+            //grdChampions.ColumnDefinitions.Clear();
 
             //this.Content = grdChampions;
             // Brush br = new SolidColorBrush(Color.FromRgb(0,0,0));
