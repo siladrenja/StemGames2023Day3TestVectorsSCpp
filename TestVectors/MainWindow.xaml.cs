@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Interop;
 using System.Globalization;
+using System.Windows.Data;
+using System.Linq;
 
 namespace TestVectors
 {
@@ -99,7 +86,11 @@ namespace TestVectors
 
             button.Click += DeleteButtonClicked;
             button.Name = "DeleteRow";
-            
+            button.Content = "Delete the row";
+            Grid.SetColumn(button, 0);
+            Grid.SetRow(button, toInsert.RowDefinitions.Count() -1);
+            toInsert.Children.Add(button);
+
             return row;
         }
 
@@ -135,14 +126,7 @@ namespace TestVectors
             }
             GridFunctions.WriteToRow(grd, col, 0);
             GridFunctions.ResizeGrid(grd, bord);
-            //grdChampions.ColumnDefinitions.Clear();
-
-            //this.Content = grdChampions;
-            // Brush br = new SolidColorBrush(Color.FromRgb(0,0,0));
-            //
-            // myGrid g = new myGrid(0.8f, 1f, 3, 3, this, br);
-            //
-            // this.Content = g.border;
+            
 
         }
 
