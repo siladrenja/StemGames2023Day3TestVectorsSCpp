@@ -49,26 +49,37 @@ namespace TestVectors
         /*
             Pozovi na kraju, kad ubaciš sve redove, ovo će prilagoditi Grid broju redova
          */
-        public static void ResizeGrid(Grid toResize)
+        public static void ResizeGrid(Grid grid, Border toResize)
         {
-
+            toResize.Height = grid.RowDefinitions.Count() * 25;
         }
 
         //očisti grid da nema redova ni stupaca
         public static void ClearGrid(Grid toClear)
         {
-
+            toClear.ColumnDefinitions.Clear();
+            toClear.RowDefinitions.Clear();
         }
 
-        public static DataGridTextColumn InsertColumn(Grid toInsert)
+        public static ColumnDefinition InsertColumn(Grid toInsert)
         {
-
-            return null;
+            ColumnDefinition col = new ColumnDefinition();
+            toInsert.ColumnDefinitions.Add(col);
+            return col;
         }
 
-        public static void WriteToRow(Array row)
+        
+        public static void WriteToRow<T>(Grid grid, T[] row, int rowNum)
         {
-
+            int counter = 1;
+            foreach(var n in row) {
+                System.Windows.Controls.TextBox txt = new System.Windows.Controls.TextBox();
+                txt.Name = n.ToString();
+                Grid.SetColumn(txt, counter);
+                Grid.SetRow(txt, rowNum);
+                grid.Children.Add(txt);
+                counter++;
+            }
         }
 
         public static RowDefinition InsertRow(Grid toInsert)
@@ -89,31 +100,27 @@ namespace TestVectors
             
         }
 
-        public static void Clear(Grid toClear)
-        {
-            toClear.ColumnDefinitions.Clear();
-            toClear.RowDefinitions.Clear();
-        }
-        
-
-
     }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        Array col = new Array({ "Hello", "World", "!", " " });
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < 10; i++)
             {
-                grdChampions.RowDefinitions.Add(new RowDefinition());
+                grd.RowDefinitions.Add(new RowDefinition());
             }
 
             for (int i = 0; i < 4; i++)
             {
-                grdChampions.ColumnDefinitions.Add(new ColumnDefinition());
+                grd.ColumnDefinitions.Add(new ColumnDefinition());
             }
+
+            GridFunctions.ResizeGrid(grd, bord);
             //grdChampions.ColumnDefinitions.Clear();
 
             //this.Content = grdChampions;

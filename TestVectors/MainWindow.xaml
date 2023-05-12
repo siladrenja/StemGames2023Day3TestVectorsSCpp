@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <Border x:Name="border" BorderBrush="Black" BorderThickness="1" CornerRadius="0" MinWidth="500" Width="Auto" Margin="20,100,20,5">
+        <Border x:Name="bord" BorderBrush="Black" BorderThickness="1" CornerRadius="0" MinWidth="500" Width="Auto" Margin="20,100,20,5">
             <Border.Resources>
                 <local:ProportionalHeightConverter x:Key="ProportionalHeightConverter"
                                            MinHeight="300"
@@ -23,7 +23,7 @@
                     <Binding Path="MinWidth" RelativeSource="{RelativeSource AncestorType=Grid}"/>
                 </MultiBinding>
             </Border.Height>
-            <Grid x:Name="grdChampions" ShowGridLines="True">
+            <Grid x:Name="grd" ShowGridLines="True">
             </Grid>
         </Border>
     </ScrollViewer>
