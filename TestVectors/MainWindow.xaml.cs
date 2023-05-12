@@ -46,6 +46,10 @@ namespace TestVectors
 
     public class GridFunctions
     {
+        public static void DeleteButtonClicked(Object sender, EventArgs e)
+        {
+
+        }
         /*
             Pozovi na kraju, kad ubaciš sve redove, ovo će prilagoditi Grid broju redova
          */
@@ -61,11 +65,12 @@ namespace TestVectors
             toClear.RowDefinitions.Clear();
         }
 
-        public static ColumnDefinition InsertColumn(Grid toInsert)
+        public static void InsertColumns(Grid toInsert, int ammount)
         {
-            ColumnDefinition col = new ColumnDefinition();
-            toInsert.ColumnDefinitions.Add(col);
-            return col;
+            for(int i = 0; i < ammount; i++)
+                toInsert.ColumnDefinitions.Add(new ColumnDefinition());
+            
+            
         }
 
         
@@ -74,7 +79,10 @@ namespace TestVectors
             int counter = 1;
             foreach(var n in row) {
                 System.Windows.Controls.TextBox txt = new System.Windows.Controls.TextBox();
-                txt.Name = n.ToString();
+                txt.IsReadOnly = true;
+                txt.Text = n.ToString();
+                txt.TextAlignment = TextAlignment.Center;
+
                 Grid.SetColumn(txt, counter);
                 Grid.SetRow(txt, rowNum);
                 grid.Children.Add(txt);
@@ -86,6 +94,12 @@ namespace TestVectors
         {
             RowDefinition row = new RowDefinition();
             toInsert.RowDefinitions.Add(row);
+
+            Button button = new Button();
+
+            button.Click += DeleteButtonClicked;
+            button.Name = "DeleteRow";
+            
             return row;
         }
 
@@ -107,7 +121,7 @@ namespace TestVectors
     public partial class MainWindow : Window
     {
 
-        Array col = new Array({ "Hello", "World", "!", " " });
+        string[] col = { "Hello", "World", "nice", "day" };
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < 10; i++)
@@ -119,7 +133,7 @@ namespace TestVectors
             {
                 grd.ColumnDefinitions.Add(new ColumnDefinition());
             }
-
+            GridFunctions.WriteToRow(grd, col, 0);
             GridFunctions.ResizeGrid(grd, bord);
             //grdChampions.ColumnDefinitions.Clear();
 
