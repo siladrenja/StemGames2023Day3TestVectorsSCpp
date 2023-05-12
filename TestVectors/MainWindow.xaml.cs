@@ -16,58 +16,42 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using System.Globalization;
 
 namespace TestVectors
 {
-    
-    public class myGrid
+
+    public class ProportionalHeightConverter : IMultiValueConverter
     {
-        public myGrid(float width, float height, int Rows, int Columns, Window win, Brush brush)
+        public double MinHeight { get; set; } = 0;
+        public double MaxHeight { get; set; } = double.PositiveInfinity;
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            gr = new Grid();
+            double width = (double)values[0];
+            double minWidth = (double)values[1];
+            double minHeight = 300; // Set your desired minimum height here
+            double ratio = minHeight / minWidth;
+            double height = width * ratio;
+            return Math.Min(Math.Max(height, MinHeight), MaxHeight);
+        }
 
-            border.BorderBrush = brush;
-            _width = width;
-            _height = height;
-            gr.Width = win.ActualWidth * width;
-            gr.Height = win.ActualHeight * height;
-            gr.HorizontalAlignment = HorizontalAlignment.Center;
-            gr.VerticalAlignment = VerticalAlignment.Top;
-            border.Width = gr.Width;
-            border.Height = gr.Height;
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
-            gr.ShowGridLines = true;
-           
-            col = Columns;
-            ro = Rows;
 
-            for(int i = 0; i < Rows; i++)
-            {
-                gr.RowDefinitions.Add(new RowDefinition());
-            }
 
-            for(int i = 0; i < Columns; i++)
-            {
-                gr.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-            win.SizeChanged += this.WindowResize;
-            border.Child = gr;
-            //win.Content = border;
+    public class GridFunctions
+    {
+        public static void ResizeGridAccordingly(Grid toResize)
+        {
 
         }
 
-        public void WindowResize(object sender, SizeChangedEventArgs e)
-        {
-            gr.Width = e.NewSize.Width * _width;
-            //gr.Height = e.NewSize.Height * _height;
-            
-            return;
-        }
 
-        public Grid gr;
-        public Border border = new Border();
-        private float col, ro;
-        private float _width, _height;
     }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -76,7 +60,7 @@ namespace TestVectors
     {
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 10; i++)
             {
                 grdChampions.RowDefinitions.Add(new RowDefinition());
             }
