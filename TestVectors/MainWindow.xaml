@@ -6,25 +6,15 @@
         xmlns:local="clr-namespace:TestVectors"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <Border x:Name="bord" BorderBrush="Black" BorderThickness="1" CornerRadius="0" MinWidth="500" Width="Auto" Margin="20,100,20,5">
-            <Border.Resources>
-                <local:ProportionalHeightConverter x:Key="ProportionalHeightConverter"
-                                           MinHeight="300"
-                                           MaxHeight="600"/>
-
-                
-                
-            </Border.Resources>
-            <Border.Height>
-                <MultiBinding Converter="{StaticResource ProportionalHeightConverter}">
-                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
-                    <Binding Path="MinWidth" RelativeSource="{RelativeSource AncestorType=Grid}"/>
-                </MultiBinding>
-            </Border.Height>
+    <Grid>
+        <Button x:Name="LoadBtn" Content="Load JSON" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="27" Width="86"/>
+        <Button x:Name="SaveBtn" Content="Save CSV" HorizontalAlignment="Left" Margin="650,-82,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.732,0.804" Height="24" Width="85"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid x:Name="grd" ShowGridLines="True">
+
             </Grid>
-        </Border>
-    </ScrollViewer>
+
+        </ScrollViewer>
+        
+    </Grid>
 </Window>

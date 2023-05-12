@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Linq;
 
+
+
 namespace TestVectors
 {
 
@@ -33,16 +35,21 @@ namespace TestVectors
 
     public class GridFunctions
     {
+        public static System.Collections.Generic.List<RowDefinition> rows;
+        public static Grid g;
         public static void DeleteButtonClicked(Object sender, EventArgs e)
         {
-
+            string name = ((Button)sender).Content.ToString();
+            int num;
+            int.TryParse(name.Substring(name.Length-1), out num);
+            RemoveRow(g, num-1);
         }
         /*
             Pozovi na kraju, kad ubaciš sve redove, ovo će prilagoditi Grid broju redova
          */
-        public static void ResizeGrid(Grid grid, Border toResize)
+        public static void ResizeGrid(Grid grid)
         {
-            toResize.Height = grid.RowDefinitions.Count() * 25;
+            //toResize.Height = grid.RowDefinitions.Count() * 25;
         }
 
         //očisti grid da nema redova ni stupaca
@@ -81,15 +88,20 @@ namespace TestVectors
         {
             RowDefinition row = new RowDefinition();
             toInsert.RowDefinitions.Add(row);
-
-            Button button = new Button();
-
-            button.Click += DeleteButtonClicked;
-            button.Name = "DeleteRow";
-            button.Content = "Delete the row";
-            Grid.SetColumn(button, 0);
-            Grid.SetRow(button, toInsert.RowDefinitions.Count() -1);
-            toInsert.Children.Add(button);
+            //if(row != null)rows.Append(row);
+            
+           if (toInsert.RowDefinitions.Count() == 1) return row;
+           Button button = new Button();
+           button.Click += DeleteButtonClicked;
+           button.Name = "DeleteRow" + toInsert.RowDefinitions.Count().ToString();
+           button.Content = "Delete the row";
+           button.IsEnabled = true;
+           button.Visibility = Visibility.Visible;
+           button.Margin = new Thickness(10);
+           //button.Width = 50;
+           Grid.SetColumn(button, 0);
+           Grid.SetRow(button, toInsert.RowDefinitions.Count() - 1);
+           toInsert.Children.Add(button);
 
             return row;
         }
@@ -105,6 +117,11 @@ namespace TestVectors
             
         }
 
+        public static void RemoveRow(Grid toRemove, int index)
+        {
+            Remove(toRemove, rows[index]);
+        }
+
     }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -112,20 +129,30 @@ namespace TestVectors
     public partial class MainWindow : Window
     {
 
+        public static void LoadButtonClicked(Object sender, EventArgs e)
+        {
+
+        }
+        public static void SaveButtonClicked(Object sender, EventArgs e)
+        {
+
+        }
+
+
         string[] col = { "Hello", "World", "nice", "day" };
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < 10; i++)
             {
-                grd.RowDefinitions.Add(new RowDefinition());
+                GridFunctions.InsertRow(grd);
             }
 
-            for (int i = 0; i < 4; i++)
-            {
-                grd.ColumnDefinitions.Add(new ColumnDefinition());
-            }
+            
+            GridFunctions.InsertColumns(grd, 5);
+            
             GridFunctions.WriteToRow(grd, col, 0);
-            GridFunctions.ResizeGrid(grd, bord);
+            GridFunctions.WriteToRow(grd, col, 1);
+            GridFunctions.ResizeGrid(grd);
             
 
         }
@@ -134,7 +161,31 @@ namespace TestVectors
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            LoadBtn.Click += LoadButtonClicked;
+            SaveBtn.Click += SaveButtonClicked;
             
+        }
+        //matko je nadalje
+        public static void DrawGrid(object obj, int[,] multilist)
+        {
+            for (int i = 0; i < multilist.GetLength(0); i++)
+            {
+                GridFunctions.InsertRow(grd);
+                GridFunctions.WriteToRow(grd, GetRowValues(multilist, i), i);
+            }
+
+            GridFunctions.ResizeGrid(grd, toResize);
+        }
+
+        private static int[] GetRowValues(int[,] multilist, int rowIndex)
+        {
+            int rowLength = multilist.GetLength(1);
+            int[] rowValues = new int[rowLength];
+            for (int j = 0; j < rowLength; j++)
+            {
+                rowValues[j] = multilist[rowIndex, j];
+            }
+            return rowValues;
         }
     }
 }
